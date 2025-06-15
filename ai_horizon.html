@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html lang="ru">
+<header 
+ style="text-align: left; padding: 1rem 2rem; display: flex; align-items: center; gap: 1rem;">
+    <img src="logo-horizon.png" alt="AI Horizon" style="height: 40px;">
+    <div>
+        <h1 style="margin: 0; font-size: 1.8rem; display: inline;">She$trerwl</h1>
+        <p style="margin: 0; display: inline; margin-left: 1rem; font-size: 0.9rem;">
+            То, от чего страшно, и без чего невозможно.
+        </p>
+    </div>
+<link rel="icon" href="/favicon.ico" type="image/x-icon">
+<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+</header>     
+</a>
+    <style>
+        :root {
+            --neon-pink: #ff2a6d;
+            --neon-blue: #05d9e8;
+            --neon-purple: #d300c5;
+            --dark-bg: #0d0221;
+            --darker-bg: #05010a;
+            --text-color: #d1f7ff;
+            --glow: 0 0 10px;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Courier New', monospace;
+            background-color: var(--dark-bg);
+            color: var(--text-color);
+            line-height: 1.6;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(255, 42, 109, 0.1) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(5, 217, 232, 0.1) 0%, transparent 20%);
+            overflow-x: hidden;
+        }
+        
+        /* Глобальные анимации */
+        @keyframes flicker {
+            0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
+                text-shadow: 
+                    var(--glow) var(--neon-blue),
+                    0 0 20px var(--neon-purple),
+                    0 0 40px var(--neon-pink);
+            }
+            20%, 24%, 55% {        
+                text-shadow: none;
+            }
+        }
+        
+        @keyframes scanline {
+            0% {
+                transform: translateY(-100%);
+            }
+            100% {
+                transform: translateY(100vh);
+            }
+        }
+        
+        /* Скан-эффект */
+        .scanlines {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                to bottom,
+                rgba(255, 255, 255, 0) 0%,
+                rgba(255, 255, 255, 0) 50%,
+                rgba(255, 255, 255, 0.03) 51%,
+                rgba(255, 255, 255, 0) 52%,
+                rgba(255, 255, 255, 0) 100%
+            );
+            background-size: 100% 8px;
+            pointer-events: none;
+            z-index: 1000;
+        }
+        
+        .scanline {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: rgba(5, 217, 232, 0.3);
+            box-shadow: 0 0 10px rgba(5, 217, 232, 0.5);
+            animation: scanline 6s linear infinite;
+            z-index: 1001;
+            pointer-events: none;
+        }
+        
+        /* Шапка сайта */
+        header {
+            padding: 2rem;
+            text-align: center;
+            border-bottom: 1px solid var(--neon-blue);
+            box-shadow: 0 0 20px var(--neon-blue);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        header::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                45deg,
+                transparent 45%,
+                rgba(255, 42, 109, 0.1) 45%,
+                rgba(255, 42, 109, 0.1) 55%,
+                transparent 55%
+            );
+            background-size: 4px 4px;
+        }
+        
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: var(--neon-blue);
+            text-shadow: 
+                var(--glow) var(--neon-blue),
+                0 0 20px var(--neon-purple),
+                0 0 40px var(--neon-pink);
+            animation: flicker 8s infinite alternate;
+            letter-spacing: 2px;
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            color: var(--neon-pink);
+            text-shadow: 0 0 5px var(--neon-pink);
+            margin-bottom: 1rem;
+        }
+        
+        /* Навигация */
+        nav {
+            background-color: var(--darker-bg);
+            padding: 1rem;
+            border-top: 1px solid var(--neon-purple);
+            border-bottom: 1px solid var(--neon-purple);
+            box-shadow: 0 0 15px var(--neon-purple);
+        }
+        
+        nav ul {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+            flex-wrap: wrap;
+        }
+        
+        nav li {
+            margin: 0 1.5rem;
+            position: relative;
+        }
+        
+        nav a {
+            color: var(--text-color);
+            text-decoration: none;
+            font-size: 1.1rem;
+            padding: 0.5rem 1rem;
+            transition: all 0.3s ease;
+            border: 1px solid transparent;
+        }
+        
+        nav a:hover {
+            color: var(--neon-blue);
+            text-shadow: 0 0 10px var(--neon-blue);
+            border: 1px solid var(--neon-blue);
+            box-shadow: 0 0 10px var(--neon-blue);
+        }
+        
+        /* Основное содержимое */
+        main {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 2rem;
+        }
+        
+        article {
+            background-color: rgba(13, 2, 33, 0.7);
+            border: 1px solid var(--neon-blue);
+            box-shadow: 0 0 15px var(--neon-blue);
+            padding: 2rem;
+            margin-bottom: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        article::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                135deg,
+                transparent 45%,
+                rgba(5, 217, 232, 0.05) 45%,
+                rgba(5, 217, 232, 0.05) 55%,
+                transparent 55%
+            );
+            background-size: 6px 6px;
+            pointer-events: none;
+        }
+        
+        h2 {
+            color: var(--neon-pink);
+            margin-bottom: 1.5rem;
+            font-size: 2rem;
+            border-bottom: 1px solid var(--neon-pink);
+            padding-bottom: 0.5rem;
+            text-shadow: 0 0 5px var(--neon-pink);
+        }
+        
+        h3 {
+            color: var(--neon-blue);
+            margin: 1.5rem 0 1rem;
+            font-size: 1.5rem;
+            text-shadow: 0 0 3px var(--neon-blue);
+        }
+        
+        p {
+            margin-bottom: 1rem;
+            text-align: justify;
+        }
+        
+        /* Боковая панель */
+        aside {
+            background-color: rgba(13, 2, 33, 0.7);
+            border: 1px solid var(--neon-purple);
+            box-shadow: 0 0 15px var(--neon-purple);
+            padding: 1.5rem;
+            height: fit-content;
+            position: sticky;
+            top: 20px;
+        }
+        
+        .timeline {
+            margin-top: 1.5rem;
+        }
+        
+        .timeline h3 {
+            border-bottom: 1px solid var(--neon-blue);
+            padding-bottom: 0.5rem;
+        }
+        
+        .timeline ul {
+            list-style: none;
+            margin-top: 1rem;
+        }
+        
+        .timeline li {
+            margin-bottom: 1rem;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+        
+        .timeline li::before {
+            content: "▶";
+            color: var(--neon-pink);
+            position: absolute;
+            left: 0;
+        }
+        
+        .timeline a {
+            color: var(--text-color);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .timeline a:hover {
+            color: var(--neon-blue);
+            text-decoration: underline;
+        }
+        
+        /* Карточки статей */
+        .card {
+            background-color: rgba(5, 1, 10, 0.8);
+            border: 1px solid var(--neon-purple);
+            box-shadow: 0 0 10px var(--neon-purple);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            transition: all 0.3s ease;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 20px var(--neon-purple);
+        }
+        
+        .card h3 {
+            color: var(--neon-blue);
+            margin-bottom: 0.5rem;
+        }
+        
+        .card p {
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+        
+        .card a {
+            color: var(--neon-pink);
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+        
+        .card a:hover {
+            text-shadow: 0 0 5px var(--neon-pink);
+        }
+        
+        /* Подвал */
+        footer {
+            background-color: var(--darker-bg);
+            padding: 2rem;
+            text-align: center;
+            border-top: 1px solid var(--neon-blue);
+            box-shadow: 0 0 20px var(--neon-blue);
+            margin-top: 3rem;
+        }
+        
+        footer p {
+            margin-bottom: 1rem;
+        }
+        
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-top: 1rem;
+        }
+        
+        .social-links a {
+            color: var(--text-color);
+            font-size: 1.5rem;
+            transition: all 0.3s;
+        }
+        
+        .social-links a:hover {
+            color: var(--neon-pink);
+            transform: scale(1.2);
+        }
+        
+        /* Эффекты для ссылок */
+        a {
+            color: var(--neon-blue);
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+        
+        a:hover {
+            color: var(--neon-pink);
+            text-shadow: 0 0 5px var(--neon-pink);
+        }
+        
+        /* Адаптивность */
+        @media (max-width: 768px) {
+            main {
+                grid-template-columns: 1fr;
+                padding: 0 1rem;
+            }
+            
+            nav ul {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            nav li {
+                margin: 0.5rem 0;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+        }
+        
+        /* Специальные элементы */
+        .highlight {
+            color: var(--neon-pink);
+            font-weight: bold;
+        }
+        
+        .quote {
+            border-left: 3px solid var(--neon-blue);
+            padding-left: 1rem;
+            margin: 1.5rem 0;
+            font-style: italic;
+            color: rgba(209, 247, 255, 0.8);
+        }
+        
+        .author {
+            text-align: right;
+            font-style: normal;
+            color: var(--neon-blue);
+            margin-top: 0.5rem;
+        }
+        
+        /* Кнопка наверх */
+        .to-top {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background-color: var(--neon-purple);
+            color: var(--text-color);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.5rem;
+            text-decoration: none;
+            box-shadow: 0 0 10px var(--neon-purple);
+            opacity: 0;
+            transition: all 0.3s;
+            z-index: 999;
+            border: none;
+            cursor: pointer;
+            visibility: hidden;
+            transform: translateY(20px);
+        }
+        
+        .to-top.visible {
+            opacity: 0.7;
+            visibility: visible;
+            transform: translateY(0);
+        }
+        
+        .to-top:hover {
+            opacity: 1;
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px var(--neon-purple);
+        }
+    </style>
+</head>
+<body>
+    <!-- Эффект сканирования -->
+    <div class="scanlines"></div>
+    <div class="scanline"></div>
+    
+    <!-- Шапка сайта -->
+    <header>
+        <h1>AI Horizon</h1>
+        <p class="subtitle">От первых алгоритмов к сингулярности</p>
+        <p>Исследуйте эволюцию искусственного интеллекта от его зарождения до будущего, которое нас ждёт</p>
+    </header>
+    
+    <!-- Навигация -->
+    <nav>
+        <ul>
+            <li><a href="#origins">Истоки</a></li>
+            <li><a href="#evolution">Эволюция</a></li>
+            <li><a href="#modern">Современность</a></li>
+            <li><a href="#future">Будущее</a></li>
+            <li><a href="#ethics">Этика</a></li>
+            <li><a href="#resources">Ресурсы</a></li>
+        </ul>
+    </nav>
+    
+    <!-- Основное содержимое -->
+    <main>
+        <div class="content">
+            <!-- Статья о происхождении ИИ -->
+            <article id="origins">
+                <h2>Истоки искусственного интеллекта</h2>
+                <p>Концепция искусственного интеллекта уходит корнями в глубокую древность, когда мифы и легенды рассказывали о созданных человеком существах, наделённых разумом. Однако научный подход к созданию ИИ начал формироваться лишь в середине XX века.</p>
+                
+                <h3>Теоретические основы</h3>
+                <p>В 1950 году Алан Тьюринг опубликовал свою знаменитую статью "Вычислительные машины и разум", где предложил тест для определения, может ли машина мыслить. Этот тест, известный как <span class="highlight">"Тест Тьюринга"</span>, стал краеугольным камнем в философии искусственного интеллекта.</p>
+                
+                <div class="quote">
+                    "Может ли машина мыслить? Этот вопрос слишком бессмыслен, чтобы его обсуждать. Тем не менее, я верю, что к концу века употребление слов и общее образованное мнение изменятся настолько, что можно будет говорить о мыслящих машинах, не боясь быть осмеянным."
+                    <div class="author">— Алан Тьюринг, 1950</div>
+                </div>
+                
+                <h3>Рождение ИИ как науки</h3>
+                <p>Летом 1956 года в Дартмутском колледже состоялась историческая конференция, на которой Джон Маккарти впервые использовал термин <span class="highlight">"искусственный интеллект"</span>. Это событие считается официальным рождением ИИ как научной дисциплины.</p>
+            </article>
+            
+            <!-- Статья о развитии ИИ -->
+            <article id="evolution">
+                <h2>Эволюция ИИ: взлёты и падения</h2>
+                <p>История развития искусственного интеллекта — это череда оптимистичных ожиданий и горьких разочарований, известных как "зимы ИИ".</p>
+                
+                <h3>Золотая эра (1956-1974)</h3>
+                <p>Первые десятилетия после Дартмутской конференции были периодом невероятного оптимизма. Исследователи верили, что создание полноценного ИИ — вопрос ближайших десятилетий. Разрабатывались первые экспертные системы, такие как DENDRAL для химического анализа и MYCIN для медицинской диагностики.</p>
+                
+                <h3>Первая зима ИИ (1974-1980)</h3>
+                <p>Неоправданные ожидания и ограничения вычислительных мощностей привели к сокращению финансирования. Критика отчёта Лайтхилла в Великобритании поставила под сомнение практическую ценность исследований ИИ.</p>
+                
+                <h3>Возрождение (1980-1987)</h3>
+                <p>Развитие экспертных систем и коммерческий успех таких проектов как XCON для Digital Equipment Corporation вернули интерес к ИИ. Япония запустила амбициозный проект компьютеров пятого поколения.</p>
+                
+                <h3>Вторая зима ИИ (1987-1993)</h3>
+                <p>Экспертные системы оказались слишком дорогими в обслуживании и не могли масштабироваться. Инвестиции снова сократились, многие компании разорились.</p>
+            </article>
+            
+            <!-- Статья о современном ИИ -->
+            <article id="modern">
+                <h2>Современная эра: глубокое обучение и GPT</h2>
+                <p>Начало XXI века ознаменовалось революцией в области машинного обучения, благодаря увеличению вычислительных мощностей и доступности больших данных.</p>
+                
+                <h3>Глубокое обучение</h3>
+                <p>В 2012 году нейронная сеть AlexNet совершила прорыв в распознавании изображений, значительно превзойдя традиционные алгоритмы. Это стало началом эры <span class="highlight">глубокого обучения</span>.</p>
+                
+                <h3>Трансформеры и языковые модели</h3>
+                <p>Архитектура трансформеров, представленная в 2017 году, позволила создавать мощные языковые модели. GPT-3 от OpenAI, выпущенный в 2020 году, показал удивительные способности в генерации человеческого текста.</p>
+                
+                <div class="quote">
+                    "Мы больше не программируем компьютеры — мы обучаем их. Это фундаментальный сдвиг в том, как мы взаимодействуем с технологиями."
+                    <div class="author">— Фей-Фей Ли, 2021</div>
+                </div>
+                
+                <h3>Применение в реальном мире</h3>
+                <p>Современный ИИ используется во всех сферах: от медицинской диагностики до создания произведений искусства. Алгоритмы рекомендуют нам контент, управляют автономными автомобилями и даже помогают учёным делать открытия.</p>
+            </article>
+            
+            <!-- Статья о будущем ИИ -->
+            <article id="future">
+                <h2>Будущее ИИ: надежды и опасения</h2>
+                <p>Развитие искусственного интеллекта вызывает как оптимистичные прогнозы, так и серьёзные опасения среди экспертов.</p>
+                
+                <h3>Искусственный общий интеллект (AGI)</h3>
+                <p>AGI — это гипотетический ИИ, способный понимать, учиться и применять знания в любых интеллектуальных задачах, как человек. Некоторые исследователи предсказывают его появление к 2045 году (<span class="highlight">гипотеза сингулярности</span>).</p>
+                
+                <h3>Экономические последствия</h3>
+                <p>Автоматизация, основанная на ИИ, может привести к значительным изменениям на рынке труда. По некоторым оценкам, до 47% рабочих мест в США находятся под угрозой автоматизации.</p>
+                
+                <h3>Экзистенциальные риски</h3>
+                <p>Философы и учёные, такие как Ник Бостром, предупреждают о потенциальных рисках создания сверхразума, который может иметь цели, не совпадающие с человеческими.</p>
+                
+                <div class="quote">
+                    "ИИ — это не просто ещё одна технология. Это технология, которая создаёт технологии."
+                    <div class="author">— Макс Тегмарк, 2017</div>
+                </div>
+            </article>
+            
+            <!-- Статья об этике ИИ -->
+            <article id="ethics">
+                <h2>Этические вопросы ИИ</h2>
+                <p>С развитием искусственного интеллекта возникают сложные этические дилеммы, требующие общественного обсуждения и регулирования.</p>
+                
+                <h3>Предвзятость алгоритмов</h3>
+                <p>ИИ обучается на данных, созданных людьми, и может унаследовать человеческие предубеждения. Известны случаи, когда системы распознавания лиц хуже работали с темнокожими людьми, а алгоритмы кредитного скоринга дискриминировали женщин.</p>
+                
+                <h3>Конфиденциальность</h3>
+                <p>Современные ИИ-системы требуют огромных объёмов данных, что ставит под угрозу приватность пользователей. Технологии распознавания лиц вызывают особую озабоченность у правозащитников.</p>
+                
+                <h3>Автономное оружие</h3>
+                <p>Разработка летального автономного оружия, способного принимать решения об атаке без участия человека, вызывает протесты многих учёных и общественных деятелей.</p>
+                
+                <h3>Регулирование ИИ</h3>
+                <p>В 2021 году ЕС предложил первый всеобъемлющий закон об ИИ, классифицирующий системы по уровню риска. Другие страны также разрабатывают свои подходы к регулированию этой технологии.</p>
+            </article>
+        </div>
+        
+        <!-- Боковая панель -->
+        <aside>
+            <div class="card">
+                <h3>Быстрые факты</h3>
+                <p><strong>1956</strong>: Термин "ИИ" впервые использован на Дартмутской конференции</p>
+                <p><strong>1997</strong>: Deep Blue побеждает Гарри Каспарова</p>
+                <p><strong>2011</strong>: IBM Watson выигрывает Jeopardy!</p>
+                <p><strong>2016</strong>: AlphaGo побеждает Ли Седоля</p>
+                <p><strong>2020</strong>: GPT-3 поражает мир своими способностями</p>
+            </div>
+            
+            <div class="timeline">
+                <h3>Хронология ИИ</h3>
+                <ul>
+                    <li><a href="#origins">1943-1956: Предыстория</a></li>
+                    <li><a href="#origins">1956: Рождение ИИ</a></li>
+                    <li><a href="#evolution">1956-1974: Золотая эра</a></li>
+                    <li><a href="#evolution">1974-1980: Первая зима</a></li>
+                    <li><a href="#evolution">1980-1987: Экспертные системы</a></li>
+                    <li><a href="#evolution">1987-1993: Вторая зима</a></li>
+                    <li><a href="#modern">1997: Deep Blue</a></li>
+                    <li><a href="#modern">2011: IBM Watson</a></li>
+                    <li><a href="#modern">2012: Глубокое обучение</a></li>
+                    <li><a href="#modern">2016: AlphaGo</a></li>
+                    <li><a href="#modern">2020: GPT-3</a></li>
+                    <li><a href="#future">Будущее: AGI?</a></li>
+                </ul>
+            </div>
+            
+            <div class="card">
+                <h3>Ключевые личности</h3>
+                <p><a href="#">Алан Тьюринг</a>: Теоретические основы</p>
+                <p><a href="#">Джон Маккарти</a>: Отец ИИ</p>
+                <p><a href="#">Джеффри Хинтон</a>: Глубокое обучение</p>
+                <p><a href="#">Ян Лекун</a>: Свёрточные сети</p>
+                <p><a href="#">Илья Суцкевер</a>: OpenAI</p>
+                <p><a href="#">Демис Хассабис</a>: DeepMind</p>
+            </div>
+        </aside>
+    </main>
+    
+    <!-- Ресурсы -->
+    <article id="resources" style="max-width: 1200px; margin: 2rem auto; padding: 0 2rem;">
+        <h2>Ресурсы для изучения ИИ</h2>
+        
+        <div class="card">
+            <h3>Книги</h3>
+            <p><a href="#">"Superintelligence"</a> — Ник Бостром</p>
+            <p><a href="#">"Life 3.0"</a> — Макс Тегмарк</p>
+            <p><a href="#">"Artificial Intelligence: A Guide for Thinking Humans"</a> — Мелани Митчелл</p>
+        </div>
+        
+        <div class="card">
+            <h3>Онлайн-курсы</h3>
+            <p><a href="#">Andrew Ng: Machine Learning (Coursera)</a></p>
+            <p><a href="#">Fast.ai: Practical Deep Learning</a></p>
+            <p><a href="#">Elements of AI (University of Helsinki)</a></p>
+        </div>
+        
+        <div class="card">
+            <h3>Исследовательские организации</h3>
+            <p><a href="#">OpenAI</a></p>
+            <p><a href="#">DeepMind</a></p>
+            <p><a href="#">MIT CSAIL</a></p>
+            <p><a href="#">Stanford AI Lab</a></p>
+        </div>
+    </article>
+    
+    <!-- Подвал -->
+    <footer>
+        <p>ИИ Хроники &copy; 2025 | Проект посвящён истории и будущему искусственного интеллекта</p>
+        <p>Сайт создан Шестерниным Василием Николаевичем</p>
+        <p>Сайт создан в стилистике киберпанка, вдохновлённой "Бегущим по лезвию 2049"</p>
+        
+        <div class="social-links">
+            <a href="#">⌘</a>
+            <a href="#">⎔</a>
+            <a href="#">⏍</a>
+            <a href="#">⍟</a>
+        </div>
+    </footer>
+    
+    <!-- Кнопка наверх -->
+    <button class="to-top" onclick="scrollToTop()">↑</button>
+    
+    <script>
+        // Функция для прокрутки наверх
+        function scrollToTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+        
+        // Показывать/скрывать кнопку при скролле
+        window.addEventListener('scroll', function() {
+            const toTopBtn = document.querySelector('.to-top');
+            if (window.pageYOffset > 300) {
+                toTopBtn.classList.add('visible');
+            } else {
+                toTopBtn.classList.remove('visible');
+            }
+        });
+        
+        // Плавная прокрутка для якорных ссылок
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+        
+        // Эффект мерцания для заголовка
+        const title = document.querySelector('h1');
+        setInterval(() => {
+            const random = Math.random();
+            if (random > 0.9) {
+                title.style.animation = 'none';
+                setTimeout(() => {
+                    title.style.animation = 'flicker 8s infinite alternate';
+                }, 100);
+            }
+        }, 1000);
+    </script>
+</body>
+</html>
